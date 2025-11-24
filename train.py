@@ -7,7 +7,7 @@ def estimated_price(mileage, theta0, theta1):
     return theta0 + theta1 * mileage
 
 
-def train(path: str, learning_rate=5e-12, iterations=10000):
+def train(path: str, learning_rate=0.1, iterations=10000000):
     """"""
     x = []
     y = []
@@ -22,35 +22,42 @@ def train(path: str, learning_rate=5e-12, iterations=10000):
     m = len(x)
     theta0 = 0.0
     theta1 = 0.0
+    x_norm = [(i - min(x)) / (max(x) - min(x)) for i in x]
 
     for _ in range(iterations):
         sum_error_theta0 = 0.0
         sum_error_theta1 = 0.0
 
         for i in range(m):
-            pred = estimated_price(x[i], theta0, theta1)
+            pred = estimated_price(x_norm[i], theta0, theta1)
             error = pred - y[i]
 
             sum_error_theta0 += error
-            sum_error_theta1 += error * x[i]
+            sum_error_theta1 += error * x_norm[i]
 
         tmp0 = theta0 - learning_rate * (1 / m) * sum_error_theta0
         tmp1 = theta1 - learning_rate * (1 / m) * sum_error_theta1
 
         theta0 = tmp0
         theta1 = tmp1
+    delta = max(x) - min(x)
+    theta1real = theta1 / delta
+    theta0real = theta0 - (theta1real * min(x))
 
     with open("theta.csv", "w") as f:
-        f.write(f"{theta0},{theta1}")
+        f.write(f"{theta0real},{theta1real}")
 
     print("TRAINING DONE")
-    print(f"Theta0 = {theta0}")
-    print(f"Theta1 = {theta1}")
+    print(f"Theta0 = {theta0real}")
+    print(f"Theta1 = {theta1real}")
     # Plotting the data and the regression line
+    line = [estimated_price(i, theta0real, theta1real) for i in x]
+    plt.plot(x, line, color='red', label='Regression Line')
     plt.scatter(x, y)
     plt.title("Mileage vs Price")
     plt.xlabel("Mileage")
     plt.ylabel("Price")
+    plt.xlim(20000, None)
     plt.show()
 
 
