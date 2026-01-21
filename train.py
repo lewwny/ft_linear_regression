@@ -3,12 +3,12 @@ import matplotlib.pyplot as plt
 
 
 def estimated_price(mileage, theta0, theta1):
-    """"""
+    """Estimate the price based on mileage and model parameters"""
     return theta0 + theta1 * mileage
 
 
 def train(path: str, learning_rate=0.1, iterations=10000000):
-    """"""
+    """Train the linear regression model"""
     x = []
     y = []
 
@@ -65,7 +65,7 @@ def train(path: str, learning_rate=0.1, iterations=10000000):
 
 
 def main():
-    """"""
+    """main function"""
     try:
         train("data.csv")
     except Exception as e:

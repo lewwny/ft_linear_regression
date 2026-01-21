@@ -2,7 +2,7 @@ import csv
 
 
 def precision(x: list, y: list, theta0: float, theta1: float) -> float:
-    """"""
+    """calculate the precision of the model using R-squared metric"""
     mean_y = sum(y) / len(y)
     ss_tot = sum((yi - mean_y) ** 2 for yi in y)
     estimations = [theta0 + theta1 * xi for xi in x]
@@ -12,7 +12,7 @@ def precision(x: list, y: list, theta0: float, theta1: float) -> float:
 
 
 def main():
-    """"""
+    """main function"""
     try:
         with open("theta.csv", "r") as f:
             theta = csv.reader(f)

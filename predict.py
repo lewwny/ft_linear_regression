@@ -2,7 +2,7 @@ import csv
 
 
 def main():
-    """"""
+    """main function"""
     try:
         with open("theta.csv", "r") as f:
             data = csv.reader(f)
