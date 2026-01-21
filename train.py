@@ -38,6 +38,9 @@ def train(path: str, learning_rate=0.1, iterations=10000000):
         tmp0 = theta0 - learning_rate * (1 / m) * sum_error_theta0
         tmp1 = theta1 - learning_rate * (1 / m) * sum_error_theta1
 
+        if abs(tmp0 - theta0) < 1e-7 and abs(tmp1 - theta1) < 1e-7:
+            break
+
         theta0 = tmp0
         theta1 = tmp1
     delta = max(x) - min(x)
